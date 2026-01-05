@@ -1,5 +1,7 @@
+import type { GithubRepo } from '@/shared/api/github'
+
 type RepoCardProps = {
-  repo: any
+  repo: GithubRepo
 }
 
 export const RepoCard = ({ repo }: RepoCardProps) => {

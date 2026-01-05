@@ -1,5 +1,7 @@
+import type { GithubUser } from '@/shared/api/github'
+
 type UserCardProps = {
-  user: any
+  user: GithubUser
 }
 
 export const UserCard = ({ user }: UserCardProps) => {

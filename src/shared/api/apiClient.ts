@@ -31,7 +31,10 @@ class HttpClient {
     return `?${query.toString()}`
   }
 
-  private request = async (path: string, options: RequestOptions = {}) => {
+  private request = async <T>(
+    path: string,
+    options: RequestOptions = {},
+  ): Promise<T> => {
     const { params, body, headers, ...rest } = options
     const url = `${this.baseUrl}${path}${this.buildQuery(params)}`
 
@@ -55,26 +58,26 @@ class HttpClient {
     const contentType = response.headers.get('content-type')
 
     if (contentType?.includes('application/json')) {
-      return response.json()
+      return response.json() as T
     }
 
-    return response.text()
+    return response.text() as T
   }
 
-  public get = (path: string, options?: RequestOptions) =>
-    this.request(path, options)
+  public get = <T>(path: string, options?: RequestOptions) =>
+    this.request<T>(path, options)
 
-  public post = (path: string, options?: RequestOptions) =>
-    this.request(path, { ...options, method: 'POST' })
+  public post = <T>(path: string, options?: RequestOptions) =>
+    this.request<T>(path, { ...options, method: 'POST' })
 
-  public put = (path: string, options?: RequestOptions) =>
-    this.request(path, { ...options, method: 'PUT' })
+  public put = <T>(path: string, options?: RequestOptions) =>
+    this.request<T>(path, { ...options, method: 'PUT' })
 
-  public delete = (path: string, options?: RequestOptions) =>
-    this.request(path, { ...options, method: 'DELETE' })
+  public delete = <T>(path: string, options?: RequestOptions) =>
+    this.request<T>(path, { ...options, method: 'DELETE' })
 
-  public patch = (path: string, options?: RequestOptions) =>
-    this.request(path, { ...options, method: 'PATCH' })
+  public patch = <T>(path: string, options?: RequestOptions) =>
+    this.request<T>(path, { ...options, method: 'PATCH' })
 }
 
 export const apiClient = new HttpClient(API_URL)
